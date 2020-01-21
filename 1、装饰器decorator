@@ -3,14 +3,14 @@
 import time
 
 def decorator(func):
-    def wrapper():                               #函数无参数，装饰器也无参数
+    def wrapper():                                  # 函数无参数，装饰器也无参数
         t1 = time.time()
         func()
         t2 = time.time()
         print('函数执行的时间为:%.2f秒'%(t2-t1))
     return wrapper
 
-@decorator
+@decorator                                          # 语法糖装饰模式
 def functest1():
     print('这是定义的第一个函数...')
     time.sleep(0.3)
