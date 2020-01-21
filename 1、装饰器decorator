@@ -1,0 +1,24 @@
+#计算函数执行时间的装饰器
+
+import time
+
+def decorator(func):
+    def wrapper():                               #函数无参数，装饰器也无参数
+        t1 = time.time()
+        func()
+        t2 = time.time()
+        print('函数执行的时间为:%.2f秒'%(t2-t1))
+    return wrapper
+
+@decorator
+def functest1():
+    print('这是定义的第一个函数...')
+    time.sleep(0.3)
+    
+@decorator
+def functest2():
+    print('这是定义的第二个函数...')
+    time.sleep(0.4)
+    
+functest1()
+functest2()
