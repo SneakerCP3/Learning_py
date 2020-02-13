@@ -1,0 +1,84 @@
+# 1.导入Flask扩展,request用来读取请求方式，flash用来给模板（HTML）传递消息
+from flask import Flask,render_template, request, flash
+import datetime
+from sqlalchemy import SQLALchemy #连接数据库
+
+# 2.创建Flask应用程序实例
+app = Flask(__name__)
+app.secret_key = 'cp3'
+
+
+# 3.定义路由及视图函数
+# 需要传入一个__name__，作用是为了确定资源所在的路径
+# Flask中定义路由是通过装饰器实现的
+# 路由默认只支持GET，如果需要增加，需要另行指定（以列表的形式）
+@app.route('/',methods=['GET','POST'])
+def index():
+    return 'Hello CP3，今天是2月11日'
+
+# 使用同一个视图函数，来显示不同用户的订单信息
+# 用尖括号<>来定义路由的参数，<>内需要起名字
+# 可用int或float来确定路由参数的类型
+@app.route('/orders/<int:order_id>')
+def get_order_id(order_id):
+    return 'order_id为 %s'% order_id
+
+# 如何返回一个网页（模板），同时如何给网页填充数据（变量代码块）
+
+@app.route('/today/',methods=['GET','POST'])
+def change_data():
+    # 添加一个可变的时间
+    nowTime = datetime.datetime.now().strftime('%Y-%m-%d')#现在
+    # 通常，模板中要传入的变量名跟要传递数据的变量名保持一致
+    my_list = [i**2 for i in range(1,5)]
+    url = 'www.cp3.com.cn'
+    return render_template('change_data.html',nowTime = nowTime,my_list = my_list,url = url)
+
+@app.route('/Login/',methods = ['GET','POST'])
+def Login_user():
+    # 1.判断请求方式
+    if request.method == 'POST':
+        # 2.获取请求参数
+        username = request.form.get('username')
+        password = request.form.get('password')
+        password2 = request.form.get('password2')
+        # 3.判断参数是否填写，两次输入密码是否相同
+        if not all([username,password,password2]):
+            # 该信息将显示在网页上，flash消息需要加密，因此需要设置secret_key
+            # 字符串前面加字母u，用来解决编码问题
+            flash(u'信息填写不完整')
+        elif password2 != password:
+            flash(u'两次输入密码不同')
+        else:
+            return '登录成功'
+    return render_template('form.html')
+# 4.启动程序
+if __name__ == '__main__':
+    # 执行了app.run就会将FLask程序运行在一个简易的服务器（Flask提供的，用来测试的）
+    app.run()
+    
+{# Template #}  
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录</title>
+</head>
+<body>
+
+<form method = "POST">
+    <label>用 户 名：</label><input type = 'text' name = 'username'><br>
+    <label>密    码：</label><input type = 'text' name = 'password'><br>
+    <label>确认密码：</label><input type = 'text' name = 'password2'><br>
+    <input type = 'submit',value = '提交'><br>
+
+    {# 使用遍历获取Flash消息 #}
+    {% for message in get_flashed_messages() %}
+        {{ message }}
+    {% endfor %}
+
+</form>
+
+</body>
+</html>
