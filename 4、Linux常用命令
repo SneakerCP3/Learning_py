@@ -86,19 +86,40 @@
    ls -lha | grep as ：将ls查询的记录通过grep命令搜索关键字as
    
 # 远程管理命令
-1. 关机/重启： 格式：shutdown 选项 时间
+14. 关机/重启： 格式：shutdown 选项 时间
    shutdown ：1分钟内关机； shutdown now ：立刻关机； shutdown 20:25（20:25关机）； shutdown +10；（10分钟后关机）
    shutdown -r ：立刻重启（最常用，一般不可关闭服务器）、
    shutdown -c ：取消关机和重启
    
-2. 查看或配置网卡信息：
+15. 查看或配置网卡信息：
    ifconfig：查看和配置计算机当前的网卡配置信息
    ifconfig | grep inet：查看网卡对应的IP地址
    ping ip地址：检测到目标ip地址的连接是否正常，数值越大网络越慢，ping 127.0.0.1用来检测本地网卡工作是否正常
 
-3. ssh：SSH是一种使用secure shell协议连接到远程计算机的软件程序 
+16. ssh：SSH是一种使用secure shell协议连接到远程计算机的软件程序 
    
-   
-   
-   
+# 用户权限及管理命令
+17. chmod命令
+   意义：change mode的缩写，可以修改用户/组对文件/目录的权限（rwx：read，write，execute）
+   格式：chmod +/-rwx 文件名及目录名
+   chmod u+r t1.py ：为u用户加上读取t1文件的权限（u可以改成g，o，a（group，others，all））
 
+18. sudom命令
+   意义：su是substitute user的缩写，表示使用另一个用户的身份。sudo命令用来以其他身份来执行命令，预设的身份为root。
+   普通用户如果要执行系统维护级的命令时，需要使用sudo命令
+    
+19. 组管理命令
+   创建组/删除组的终端命令都需要通过sudo执行
+   sudo groupadd 组名：添加组
+   sudo groupdel 组名：删除组
+   cat/etc/group ：确认组信息（组信息存储在这个路径的文件下面）
+   chgrp -R 组名 文件名：递归修改文件/目录的所属组
+   
+20. 用户管理命令
+   用户名和密码两个命令同时具备
+   useradd -m -g 组 新建用户名 ：-m可自动建立家目录，-g指定用户所在组，否则会建立一个同名的组
+   passwd 用户名：设置用户密码
+   userdel -r 用户名 ：删除用户，-r选项会自动删除用户家目录
+   
+   
+   
