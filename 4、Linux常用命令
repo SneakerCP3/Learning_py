@@ -88,7 +88,7 @@
 # 远程管理命令
 14. 关机/重启： 格式：shutdown 选项 时间
    shutdown ：1分钟内关机； shutdown now ：立刻关机； shutdown 20:25（20:25关机）； shutdown +10；（10分钟后关机）
-   shutdown -r ：立刻重启（最常用，一般不可关闭服务器）、
+   shutdown -r ：重启（最常用，一般不可关闭服务器）、
    shutdown -c ：取消关机和重启
    
 15. 查看或配置网卡信息：
@@ -116,10 +116,43 @@
    chgrp -R 组名 文件名：递归修改文件/目录的所属组
    
 20. 用户管理命令
-   用户名和密码两个命令同时具备
-   useradd -m -g 组 新建用户名 ：-m可自动建立家目录，-g指定用户所在组，否则会建立一个同名的组
-   passwd 用户名：设置用户密码
+   # 创建用户时用户名和密码两个命令同时具备
+   sudo useradd -m -g 组 新建用户名 ：-m可自动建立家目录，-g指定用户所在组，否则会建立一个同名的组
+   sudo passwd 用户名：设置用户密码
    userdel -r 用户名 ：删除用户，-r选项会自动删除用户家目录
+   id [用户名] ：查看用户信息
+   su -用户名：切换用户  exit ：退出当前登录账户
    
+22. which命令
+   which可用来查询执行终端命令保存的文件位置
+   whic ls：查看ls命令   输出：/bin/ls
    
+23. 系统信息命令
+   date：日期
+   cal：日历
+   df -h：显示磁盘剩余空见 disk free
+   du -h [目录名]：disk usage显示目录下的文件大小
+
+# 文件打包压缩
+24. 打包/解包（只打包不压缩）
+   tar -cvf 打包生成的文件名.tar 被打包的文件和路径   #打包
+   tar -xvf 打包文件.tar                            #解包   
+25. 压缩/解压缩
+   gzip 命令用来压缩
+   重点：在tar命令中有一个选项-z 可以调用gzip，从而可以方便实现压缩和解压缩的功能
+   tar -zcvf 打包生成的文件.tar.gz 被压缩的文件/路径   # 压缩文件
+   tar -zxvf 打包文件.tar.gz                         # 解压缩文件
+   tar -zxvf 打包文件.tar.gz -C 目标路径              # 解压缩到指定路径
+   
+# 软件卸载和安装
+26. 安装命令 apt
+   意义：apt是Advanced Packing Tool，是Linux下的一款安装包管理工具
+   sudo apt install 安装包：安装软件
+   sudo apt remove 软件名：卸载软件
+   sudo apt upgrade：更新已安装的包
+   
+
+
+
+
    
