@@ -104,7 +104,7 @@
    格式：chmod +/-rwx 文件名及目录名
    chmod u+r t1.py ：为u用户加上读取t1文件的权限（u可以改成g，o，a（group，others，all））
 
-18. sudom命令
+18. sudo命令
    意义：su是substitute user的缩写，表示使用另一个用户的身份。sudo命令用来以其他身份来执行命令，预设的身份为root。
    普通用户如果要执行系统维护级的命令时，需要使用sudo命令
     
